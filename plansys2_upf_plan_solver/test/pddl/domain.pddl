@@ -1,0 +1,26 @@
+(define (domain pddl-domain)
+ (:requirements :strips :typing :durative-actions)
+ (:types robot waypoint person room)
+ (:predicates (robot_at ?r - robot ?w - waypoint) (person_at ?p - person ?w - waypoint) (cleaned ?r_0 - room) (patrolled ?w - waypoint) (delivered ?p - person) (destination_waypoint ?w - waypoint) (welcome_waypoint ?w - waypoint) (waypoint_of_room ?w - waypoint ?r_0 - room) (cleaning_waypoint ?w - waypoint) (patrolling_waypoint ?w - waypoint))
+ (:functions (duration_move ?r - robot ?from_w - waypoint ?to_w - waypoint) (duration_clean ?r - robot ?rm - room ?w - waypoint) (duration_patrol ?r - robot ?w - waypoint) (duration_attend_person ?r - robot ?w_welcom - waypoint ?w_dest - waypoint))
+ (:durative-action move
+  :parameters ( ?r - robot ?from_w - waypoint ?to_w - waypoint)
+  :duration (= ?duration (duration_move ?r ?from_w ?to_w))
+  :condition (and (at start (robot_at ?r ?from_w)))
+  :effect (and (at start (not (robot_at ?r ?from_w))) (at end (robot_at ?r ?to_w))))
+ (:durative-action clean
+  :parameters ( ?r - robot ?rm - room ?w - waypoint)
+  :duration (= ?duration (duration_clean ?r ?rm ?w))
+  :condition (and (at start (robot_at ?r ?w))(over all (robot_at ?r ?w))(at end (robot_at ?r ?w))(at start (waypoint_of_room ?w ?rm))(at start (cleaning_waypoint ?w)))
+  :effect (and (at end (cleaned ?rm))))
+ (:durative-action patrol
+  :parameters ( ?r - robot ?w - waypoint)
+  :duration (= ?duration (duration_patrol ?r ?w))
+  :condition (and (at start (robot_at ?r ?w))(over all (robot_at ?r ?w))(at end (robot_at ?r ?w))(at start (patrolling_waypoint ?w)))
+  :effect (and (at end (patrolled ?w))))
+ (:durative-action attend_person
+  :parameters ( ?r - robot ?p - person ?w_welcome - waypoint ?w_dest - waypoint)
+  :duration (= ?duration (duration_attend_person ?r ?w_welcome ?w_dest))
+  :condition (and (at start (robot_at ?r ?w_welcome))(at start (person_at ?p ?w_welcome))(at start (welcome_waypoint ?w_welcome))(at start (destination_waypoint ?w_dest)))
+  :effect (and (at end (delivered ?p)) (at end (robot_at ?r ?w_dest)) (at end (person_at ?p ?w_dest)) (at start (not (robot_at ?r ?w_welcome))) (at start (not (person_at ?p ?w_welcome)))))
+)

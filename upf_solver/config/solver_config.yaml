@@ -1,0 +1,6 @@
+upf_solver_node:
+  ros__parameters:
+    solver: tamer
+    domain_path: "example/domain.pddl"
+    problem_path: "example/problem.pddl"
+    output_plan_path: "example/plan.pddl"
