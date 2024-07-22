@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 
 from unified_planning.io import PDDLReader, PDDLWriter
-from unified_planning.shortcuts import OneshotPlanner # OptimalityGuarantee
+from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
 
 
 class UpfSolver(Node):
@@ -32,12 +32,13 @@ class UpfSolver(Node):
             self.get_logger().error(f'Error loading problem: {e}')
 
     def solve(self):
-        with OneshotPlanner(name=self.solver) as planner: # optimality_guarantee=OptimalityGuarantee.SOLVED_OPTIMALLY
+        with OneshotPlanner(name=self.solver) as planner:  # optimality_guarantee=OptimalityGuarantee.SOLVED_OPTIMALLY
             result = planner.solve(self.parsed_problem)
             print(result.status)
             print(result.plan)
             writer = PDDLWriter(self.parsed_problem)
             writer.write_plan(result.plan, self.output_plan_path)
+
 
 def main(args=None):
     rclpy.init(args=args)
@@ -46,9 +47,10 @@ def main(args=None):
         node.load_problem()
         node.solve()
     except Exception as e:
-        node.get_logger().error(f'Error solving problem: {e}')  
+        node.get_logger().error(f'Error solving problem: {e}')
     node.destroy_node()
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

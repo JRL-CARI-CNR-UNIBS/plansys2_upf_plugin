@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-import yaml
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -21,31 +20,14 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 
 
-
 def generate_launch_description():
     package_dir = get_package_share_directory('upf_solver')
 
-    
     upf_solver_param_path = os.path.join(
         package_dir,
         'config',
         'solver_config.yaml'
         )
-        
-    # with open(experiments_controller_param_path, 'r') as file:
-    #     config_file = yaml.safe_load(file)
-    #     experiments_controller_param = config_file['experiments_controller_node']['ros__parameters']
-
-    # problem_path = os.path.join(
-    #     package_dir,
-    #     'pddl',
-    #     experiments_controller_param['problem_name']
-    # )
-
-    # with open(problem_path, 'r') as file:
-    #     problem = yaml.safe_load(file)
-
-    # experiments_controller_param["problem"] = problem
 
     planner_cmd = Node(
         package='upf_solver',
@@ -54,8 +36,7 @@ def generate_launch_description():
         output='screen',
         parameters=[upf_solver_param_path],
     )
-    
+
     ld = LaunchDescription()
     ld.add_action(planner_cmd)
-
     return ld
