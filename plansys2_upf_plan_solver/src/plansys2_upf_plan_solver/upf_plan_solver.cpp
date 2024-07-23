@@ -73,8 +73,11 @@ void UPFPlanSolver::configure(
 {
   lc_node_ = lc_node;
 
-  arguments_parameter_name_ = plugin_name + ".arguments";
-  lc_node_->declare_parameter<std::string>(arguments_parameter_name_, "");
+  solver_parameter_name_ = plugin_name + ".solver";
+  lc_node_->declare_parameter<std::string>(solver_parameter_name_, "tamer");
+
+  // arguments_parameter_name_ = plugin_name + ".arguments";
+  // lc_node_->declare_parameter<std::string>(arguments_parameter_name_, "");
 
   output_dir_parameter_name_ = plugin_name + ".output_dir";
   lc_node_->declare_parameter<std::string>(
@@ -118,14 +121,13 @@ UPFPlanSolver::getPlan(
     lc_node_->get_name(), solver_timeout.seconds());
 
   const auto plan_file_path = output_dir / std::filesystem::path("plan");
-  const auto args = lc_node_->get_parameter(arguments_parameter_name_).value_to_string();
+  const auto solver = lc_node_->get_parameter(solver_parameter_name_).value_to_string();
 
   std::ostringstream command_stream;
-  command_stream << "ros2 run upf_solver upf_solver --ros-args -p solver:=tamer" << " "
+  command_stream << "ros2 run upf_solver upf_solver --ros-args -p solver:=" + solver << " "
                  << "-p domain_path:=" + domain_file_path.string() << " "
                  << "-p problem_path:=" + problem_file_path.string() << " "
-                 << "-p output_plan_path:=" + plan_file_path.string() << " "
-                 << "> " + plan_file_path.string();
+                 << "-p output_plan_path:=" + plan_file_path.string();
   std::string command = command_stream.str();
 
   const int status = system(command.c_str());

@@ -3,7 +3,7 @@ from rclpy.node import Node
 
 from unified_planning.io import PDDLReader, PDDLWriter
 from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
-
+from unified_planning.engines.results import PlanGenerationResultStatus
 
 class UpfSolver(Node):
     def __init__(self):
@@ -29,15 +29,20 @@ class UpfSolver(Node):
         try:
             self.parsed_problem = reader.parse_problem(self.domain_path, self.problem_path)
         except Exception as e:
-            self.get_logger().error(f'Error loading problem: {e}')
-
+            raise e
     def solve(self):
         with OneshotPlanner(name=self.solver) as planner:  # optimality_guarantee=OptimalityGuarantee.SOLVED_OPTIMALLY
             result = planner.solve(self.parsed_problem)
-            print(result.status)
-            print(result.plan)
+            self.get_logger().info(f'Plan generation result: {result.status}')
+            if result.plan:
+                self.get_logger().info(f"{result.plan}")
+
             writer = PDDLWriter(self.parsed_problem)
-            writer.write_plan(result.plan, self.output_plan_path)
+            with open(self.output_plan_path, 'w') as f:
+                if result.status == PlanGenerationResultStatus.SOLVED_SATISFICING or result.status == PlanGenerationResultStatus.SOLVED_OPTIMALLY:
+                    f.write(f"; Solution Found \n{writer.get_plan(result.plan)}")
+                else:
+                    f.write(f"; No solution {result.status}")
 
 
 def main(args=None):
@@ -47,7 +52,7 @@ def main(args=None):
         node.load_problem()
         node.solve()
     except Exception as e:
-        node.get_logger().error(f'Error solving problem: {e}')
+        node.get_logger().error(f'Error! {e}')
     node.destroy_node()
     rclpy.shutdown()
 

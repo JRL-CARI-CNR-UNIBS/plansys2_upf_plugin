@@ -1,3 +1,4 @@
+; Solution found 
 0: (move robot2 start_wp_robot2 clean2)[11]
 0: (move robot1 start_wp_robot1 clean1)[8]
 8.01: (clean robot1 room1 clean1)[10.1]

@@ -1,0 +1,3 @@
+```
+run ': ros2 run upf_solver upf_solver --ros-args -p solver:='tamer' -p domain_path:='/home/kalman/projects/turtlebot_ws/src/plansys2_upf_plugin/upf_solver/example/domain.pddl' -p problem_path:='/home/kalman/projects/turtlebot_ws/src/plansys2_upf_plugin/upf_solver/example/problem.pddl' -p output_plan_path:='/home/kalman/projects/turtlebot_ws/src/plansys2_upf_plugin/upf_solver/example/output_plan.pddl'
+```

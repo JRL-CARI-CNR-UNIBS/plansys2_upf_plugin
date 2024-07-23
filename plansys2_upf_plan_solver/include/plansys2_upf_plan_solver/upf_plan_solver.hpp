@@ -31,7 +31,7 @@ namespace plansys2
 class UPFPlanSolver : public PlanSolverBase
 {
 private:
-  std::string arguments_parameter_name_;
+  std::string solver_parameter_name_;
   std::string output_dir_parameter_name_;
   rclcpp_lifecycle::LifecycleNode::SharedPtr lc_node_;
 

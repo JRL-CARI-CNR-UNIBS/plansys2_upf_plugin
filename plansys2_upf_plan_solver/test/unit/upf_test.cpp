@@ -26,35 +26,80 @@
 #include "pluginlib/class_list_macros.hpp"
 #include "plansys2_core/PlanSolverBase.hpp"
 
-void test_plan_generation(const std::string & argument = "")
+
+// TO TEST GUIDELINES:
+// 1. Test the UPFPlanSolver::getPlan method with a valid domain and problem.
+// 2. Test the UPFPlanSolver::getPlan method with an invalid domain and problem.
+// 3. Test the UPFPlanSolver::isDomainValid method with a not existing solver
+// 4. Test the UPFPlanSolver::isDomainValid with wrong domain and problem path
+
+class UPFPlanSolverTest : public ::testing::Test
 {
-  std::string pkgpath = ament_index_cpp::get_package_share_directory("plansys2_upf_plan_solver");
-  std::ifstream domain_ifs(pkgpath + "/pddl/domain.pddl");
-  std::string domain_str((
-      std::istreambuf_iterator<char>(domain_ifs)),
-    std::istreambuf_iterator<char>());
+public:
+  UPFPlanSolverTest()
+  {
+    std::cerr << "UPFPlanSolverTest" << std::endl;
+    node_ = rclcpp_lifecycle::LifecycleNode::make_shared("test_node");
+    planner_ = std::make_shared<plansys2::UPFPlanSolver>();
+    configure_planner("tamer");
+  }
+  ~UPFPlanSolverTest()
+  {
+    node_.reset();
+    planner_.reset();
+  }
+  void configure_planner(const std::string & solver)
+  {
+    planner_->configure(node_, "UPF");  // Internally is declared UPF.solver
+    node_->set_parameter(rclcpp::Parameter("UPF.solver", solver));
+  }
+  void load_domain_problem(
+    const std::string & domain_name,
+    const std::string & problem_name)
+  {
+    std::string pkgpath = ament_index_cpp::get_package_share_directory("plansys2_upf_plan_solver");
 
-  std::ifstream problem_ifs(pkgpath + "/pddl/problem.pddl");
-  std::string problem_str((
-      std::istreambuf_iterator<char>(problem_ifs)),
-    std::istreambuf_iterator<char>());
+    std::ifstream domain_ifs(pkgpath + "/pddl/" + domain_name);
+    domain_.assign(
+      (std::istreambuf_iterator<char>(domain_ifs)),
+      std::istreambuf_iterator<char>());
 
-  auto node = rclcpp_lifecycle::LifecycleNode::make_shared("test_node");
-  auto planner = std::make_shared<plansys2::UPFPlanSolver>();
-  planner->configure(node, "UPF");
-  node->set_parameter(rclcpp::Parameter("UPF.arguments", argument));
-  ASSERT_TRUE(true);
-  auto plan = planner->getPlan(domain_str, problem_str, "generate_plan_good");
+    std::ifstream problem_ifs(pkgpath + "/pddl/" + problem_name);
+    problem_.assign(
+      (std::istreambuf_iterator<char>(problem_ifs)),
+      std::istreambuf_iterator<char>());
+  }
+  std::optional<plansys2_msgs::msg::Plan> solve()
+  {
+    std::cerr << "solve" << std::endl;
+    return planner_->getPlan(domain_, problem_, "generate_plan_good");
+  }
 
-  // ASSERT_TRUE(plan);
-  // ASSERT_EQ(plan.value().items.size(), 10);
+private:
+  rclcpp_lifecycle::LifecycleNode::SharedPtr node_;
+  std::string domain_;
+  std::string problem_;
+  std::shared_ptr<plansys2::UPFPlanSolver> planner_;
+};
+
+TEST_F(UPFPlanSolverTest, GeneratePlan)
+{
+  load_domain_problem("domain.pddl", "problem.pddl");
+  auto plan = solve();
+  for (const auto & item : plan->items) {
+    std::cerr << item.action.c_str() << std::endl;
+  }
+  ASSERT_TRUE(plan);
+  ASSERT_EQ(plan.value().items.size(), 10);
 }
 
-TEST(popf_plan_solver, generate_plan)
+TEST_F(UPFPlanSolverTest, GenerateInvalidPlan)
 {
-  test_plan_generation();
-}
+  load_domain_problem("no_solution_domain.pddl", "no_solution_problem.pddl");
+  auto plan = solve();
 
+  ASSERT_FALSE(plan.has_value());
+}
 
 int main(int argc, char ** argv)
 {
