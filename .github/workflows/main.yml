@@ -30,4 +30,4 @@ jobs:
                 "parallel-workers" : 1
               }
             }
-          repo-file-url: ${GITHUB_WORKSPACE}/dependencies.repos
+          vcs-repo-file-url: https://github.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/blob/main/dependencies.repos
