@@ -19,33 +19,24 @@ jobs:
         uses: ros-tooling/setup-ros@0.7.0
         with:
           required-ros-distributions: humble
-
-      # - name: Set up Python
-      #   uses: actions/setup-python@v1
-      #   with:
-      #     python-version: "3.10"
           
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # - name: Install Python dependencies
-      #   uses: py-actions/py-dependency-install@v4
-      #   with:
-      #     path: "upf_solver/requirements.txt"
       - name: install python dep
         run: |
           python3 -m pip install -r upf_solver/requirements.txt
 
-      # - name: build
-      #   uses: ros-tooling/action-ros-ci@0.3.3
-      #   with:
-      #     package-name: upf_solver
-      #     target-ros2-distro: humble
+      - name: build
+        uses: ros-tooling/action-ros-ci@0.3.3
+        with:
+          package-name: upf_solver
+          target-ros2-distro: humble
           
       - name: build and test
         uses: ros-tooling/action-ros-ci@0.3.3
         with:
-          package-name: upf_solver plansys2_upf_plan_solver
+          package-name: plansys2_upf_plan_solver
           target-ros2-distro: humble
           colcon-defaults: |
             {
