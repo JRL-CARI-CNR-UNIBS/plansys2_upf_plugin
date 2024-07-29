@@ -20,18 +20,21 @@ jobs:
         with:
           required-ros-distributions: humble
 
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: "3.10"
+      # - name: Set up Python
+      #   uses: actions/setup-python@v1
+      #   with:
+      #     python-version: "3.10"
           
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Python dependencies
-        uses: py-actions/py-dependency-install@v4
-        with:
-          path: "upf_solver/requirements.txt"
+      # - name: Install Python dependencies
+      #   uses: py-actions/py-dependency-install@v4
+      #   with:
+      #     path: "upf_solver/requirements.txt"
+      - name: install python dep
+        run: |
+          python3 -m pip install -r upf_solver/requirements.txt
 
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.3
