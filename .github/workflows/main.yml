@@ -1,38 +1,42 @@
-# name: main
+name: main
 
-# on:
-#   pull_request:
-#     branches:
-#       - main
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   build-and-test:
-#     runs-on: ${{ matrix.os }}
-#     strategy:
-#       matrix:
-#         os: [ubuntu-22.04]
-#       fail-fast: false
-#     steps:
-#       - name: Setup ROS 2
-#         uses: ros-tooling/setup-ros@0.7.1
-#         with:
-#           required-ros-distributions: rolling
-#       - name: build
-#         uses: ros-tooling/action-ros-ci@0.3.6
-#         with:
-#           package-name: upf-solver
-#           target-ros2-distro: humble
-#       - name: build and test
-#         uses: ros-tooling/action-ros-ci@0.3.6
-#         with:
-#           package-name: plansys2_upf_plan_solver
-#           target-ros2-distro: humble
-#           colcon-defaults: |
-#             {
-#               "test": {
-#                 "parallel-workers" : 1
-#               }
-#             }
-#           vcs-repo-file-url: https://github.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/blob/main/dependencies.repos
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04]
+      fail-fast: false
+    steps:
+      - name: Setup ROS 2
+        uses: ros-tooling/setup-ros@0.7.1
+        with:
+          required-ros-distributions: humble
+      - name: build
+        uses: ros-tooling/action-ros-ci@0.3.6
+        with:
+          package-name: upf_solver
+          target-ros2-distro: humble
+      - name: build and test
+        uses: ros-tooling/action-ros-ci@0.3.6
+        with:
+          package-name: plansys2_upf_plan_solver
+          target-ros2-distro: humble
+          colcon-defaults: |
+            {
+              "test": {
+                "parallel-workers" : 1
+              }
+            }
+          vcs-repo-file-url: https://github.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/blob/main/dependencies.repos
+          skip-rosdep-install: false
+          rosdep-check: true
+          import-token: ${{ secrets.GITHUB_TOKEN }}
+
