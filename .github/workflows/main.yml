@@ -29,10 +29,14 @@ jobs:
       #   run: |
       #     python3 -m pip install --upgrade pip
       #     python3 -m pip install -r requirements.txt
+      - name: List files in the current directory
+        run: ls -al
       - name: Install python dependencies
         uses: py-actions/py-dependency-install@v4
         with:
           path: "./requirements.txt"
+      - name: List files in the current directory
+        run: ls -al
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
