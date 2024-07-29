@@ -23,7 +23,6 @@
 #include <fstream>
 #include <sstream>
 
-#include "plansys2_msgs/msg/plan_item.hpp"
 #include "plansys2_upf_plan_solver/upf_plan_solver.hpp"
 
 namespace plansys2

@@ -21,6 +21,7 @@
 #include <string>
 
 #include "plansys2_core/PlanSolverBase.hpp"
+#include "plansys2_msgs/msg/plan_item.hpp"
 
 // using namespace std::chrono_literals;
 using std::chrono_literals::operator""s;
