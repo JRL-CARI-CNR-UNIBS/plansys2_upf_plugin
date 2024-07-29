@@ -19,12 +19,15 @@ jobs:
         uses: ros-tooling/setup-ros@0.7.1
         with:
           required-ros-distributions: humble
-      - name: upf solver dependencies
-        # uses: actions/setup-python@v5
-        # with:
-        #   python-version: '3.9'
-        #   cache: 'pip' # caching pip dependencies
-        run: pip install -r upf_solver/requirements.txt
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+
+      - name: Unified planning dependencies
+        run: |
+          python3 -m pip install unified-planning
+          
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
