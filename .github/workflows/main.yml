@@ -31,8 +31,8 @@ jobs:
       #     python3 -m pip install -r requirements.txt
       - name: Install python dependencies
         uses: py-actions/py-dependency-install@v4
-        # with:
-        #   path: "requirements.txt"
+        with:
+          path: "./requirements.txt"
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
