@@ -23,30 +23,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: "3.10"
+          python-version: 3.8
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # - name: Install Python dependencies
-      #   run: |
-      #     python3 -m pip install --upgrade pip
-      #     python3 -m pip install -r requirements.txt
-      - name: List files in the current directory
-        run: ls -al
-      - name: Print working directory
-        run: pwd
-      - name: Print environment variables
-        run: printenv
-      - name: Install python dependencies
-        uses: py-actions/py-dependency-install@v4
-        with:
-          path: "./requirements.txt"
-      - name: List files in the current directory
-        run: ls -al
+      - name: Install Python dependencies
+        run: python3 -m pip install -r upf_solver/requirements.txt
+
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
           package-name: upf_solver
           target-ros2-distro: humble
-
+          
       - name: build and test
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
