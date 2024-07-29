@@ -15,10 +15,10 @@ jobs:
         os: [ubuntu-22.04]
       fail-fast: false
     steps:
-      # - name: Setup ROS 2
-      #   uses: ros-tooling/setup-ros@0.7.1
-      #   with:
-      #     required-ros-distributions: humble
+      - name: Setup ROS 2
+        uses: ros-tooling/setup-ros@0.7.1
+        with:
+          required-ros-distributions: humble
 
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -31,7 +31,6 @@ jobs:
         uses: py-actions/py-dependency-install@v4
         with:
           path: "upf_solver/requirements.txt"
-
 
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
