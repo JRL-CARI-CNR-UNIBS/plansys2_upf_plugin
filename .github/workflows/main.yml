@@ -36,16 +36,16 @@ jobs:
         run: |
           python3 -m pip install -r upf_solver/requirements.txt
 
-      - name: build
-        uses: ros-tooling/action-ros-ci@0.3.3
-        with:
-          package-name: upf_solver
-          target-ros2-distro: humble
+      # - name: build
+      #   uses: ros-tooling/action-ros-ci@0.3.3
+      #   with:
+      #     package-name: upf_solver
+      #     target-ros2-distro: humble
           
       - name: build and test
         uses: ros-tooling/action-ros-ci@0.3.3
         with:
-          package-name: plansys2_upf_plan_solver
+          package-name: upf_solver plansys2_upf_plan_solver
           target-ros2-distro: humble
           colcon-defaults: |
             {
