@@ -44,5 +44,5 @@ jobs:
           vcs-repo-file-url: https://raw.githubusercontent.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/main/dependencies.repos
           skip-rosdep-install: false
           rosdep-check: true
-          # import-token: ${{ secrets.GITHUB_TOKEN }}
+          import-token: ${{ secrets.GITHUB_TOKEN }}
 
