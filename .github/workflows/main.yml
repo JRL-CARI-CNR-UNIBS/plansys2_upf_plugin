@@ -31,6 +31,10 @@ jobs:
       #     python3 -m pip install -r requirements.txt
       - name: List files in the current directory
         run: ls -al
+      - name: Print working directory
+        run: pwd
+      - name: Print environment variables
+        run: printenv
       - name: Install python dependencies
         uses: py-actions/py-dependency-install@v4
         with:
