@@ -19,6 +19,13 @@ jobs:
         uses: ros-tooling/setup-ros@0.7.1
         with:
           required-ros-distributions: humble
+      - name: upf solver dependencies
+        uses: actions/checkout@v4
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip' # caching pip dependencies
+        run: pip install -r requirements.txt
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
@@ -35,8 +42,7 @@ jobs:
                 "parallel-workers" : 1
               }
             }
-          vcs-repo-file-url: https://github.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/blob/main/dependencies.repos
-          skip-rosdep-install: false
+          vcs-repo-file-url: https://raw.githubusercontent.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/main/dependencies.repos
           rosdep-check: true
           import-token: ${{ secrets.GITHUB_TOKEN }}
 
