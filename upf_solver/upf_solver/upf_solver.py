@@ -1,8 +1,8 @@
 import rclpy
 from rclpy.node import Node
 
-from unified_planning.io import PDDLReader, PDDLWriter
 from unified_planning.engines.results import PlanGenerationResultStatus
+from unified_planning.io import PDDLReader, PDDLWriter
 from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
 
 
@@ -18,7 +18,8 @@ class UpfSolver(Node):
         self.solver = self.get_parameter('solver').get_parameter_value().string_value
         self.domain_path = self.get_parameter('domain_path').get_parameter_value().string_value
         self.problem_path = self.get_parameter('problem_path').get_parameter_value().string_value
-        self.output_plan_path = self.get_parameter('output_plan_path').get_parameter_value().string_value
+        self.output_plan_path = (self.get_parameter('output_plan_path').get_parameter_value()
+                                 ).string_value
 
         self.get_logger().info(f'Using solver: {self.solver}')
         self.get_logger().info(f'Using domain: {self.domain_path}')
@@ -41,7 +42,8 @@ class UpfSolver(Node):
 
             writer = PDDLWriter(self.parsed_problem)
             with open(self.output_plan_path, 'w') as f:
-                if result.status == PlanGenerationResultStatus.SOLVED_SATISFICING or result.status == PlanGenerationResultStatus.SOLVED_OPTIMALLY:
+                if (result.status == PlanGenerationResultStatus.SOLVED_SATISFICING or
+                        result.status == PlanGenerationResultStatus.SOLVED_OPTIMALLY):
                     f.write(f'; Solution Found \n{writer.get_plan(result.plan)}')
                 else:
                     f.write(f'; No solution {result.status}')
