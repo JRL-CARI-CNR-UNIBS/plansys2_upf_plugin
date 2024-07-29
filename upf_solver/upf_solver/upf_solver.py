@@ -7,7 +7,7 @@ from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
 
 
 class UpfSolver(Node):
-    
+
     def __init__(self):
         super().__init__('upf_solver_node')
 
