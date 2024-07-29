@@ -28,6 +28,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python3 -m pip install -r .github/workflows/requirements.txt
+        import-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
