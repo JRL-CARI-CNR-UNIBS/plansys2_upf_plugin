@@ -19,20 +19,21 @@ jobs:
         uses: ros-tooling/setup-ros@0.7.1
         with:
           required-ros-distributions: humble
+
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: "3.8"
+          python-version: 3.8
 
-      - name: Unified planning dependencies
-        run: |
-          python3 -m pip install unified-planning
-          
+      - name: Install Python dependencies
+        run: python3 -m pip install -r upf_solver/requirements.txt
+
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
           package-name: upf_solver
           target-ros2-distro: humble
+          
       - name: build and test
         uses: ros-tooling/action-ros-ci@0.3.6
         with:
