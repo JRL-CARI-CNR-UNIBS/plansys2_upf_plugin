@@ -56,7 +56,6 @@ To use the `upf_solver` node, you need to start it with appropriate parameters. 
 ```sh
 ros2 run upf_solver upf_solver --ros-args -p solver:='tamer' -p domain_path:='{$DOMAIN_PATH.PDDL}' -p problem_path:='{$PROBLEM_PATH.PDDL}' -p output_plan_path:='OUTPUT_PLAN.PDDL'
 ```
-## Packages
 
 ### plansys2_upf_plan_solver
 
