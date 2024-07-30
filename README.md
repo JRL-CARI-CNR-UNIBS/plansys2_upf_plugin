@@ -1,6 +1,6 @@
 # Plansys2 UPF Plugin
 
-This repository contains the plugin for [PlanSys2](https://github.com/PlanSys2/ros2_planning_system) that uses the [unified-planning (UP)]() as a solver. There are two ROS 2 packages:
+This repository contains the plugin for [PlanSys2](https://github.com/PlanSys2/ros2_planning_system) that uses the [unified-planning (UP)](https://github.com/aiplan4eu/unified-planning) as a solver. There are two ROS 2 packages:
 
 1. **upf_solver**: Contains a ROS 2 node that, given the domain and problem files in .pddl format and the path to save the plan, loads the domain/problem and saves the found solution.
 2. **plansys2_upf_plan_solver**: Contains the actual plugin for PlanSys2.
