@@ -1,1 +1,1 @@
-unified-planning
+unified-planning[engines]

@@ -18,8 +18,8 @@ setup(
         (os.path.join('share', package_name, 'example'), glob('example/*.pddl')),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
     ],
-    install_requires=['setuptools'
-                      'unified-planning[tamer]'],
+    install_requires=['setuptools',
+                      'unified-planning[engines]'],
     zip_safe=True,
     maintainer='kalman',
     maintainer_email='samuele.sandrini@polito.it',
