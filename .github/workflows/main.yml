@@ -33,6 +33,18 @@ jobs:
           package-name: upf_solver
           target-ros2-distro: humble
           
+      - name: source upf_solver
+        with:
+          package-name: plansys2_upf_plan_solver
+          target-ros2-distro: humble
+          colcon-defaults: |
+            {
+              "test": {
+                "parallel-workers" : 1
+              }
+            }
+          vcs-repo-file-url: https://raw.githubusercontent.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/main/dependencies.repos
+          import-token: ${{ secrets.GITHUB_TOKEN }}    
       - name: build and test
         uses: ros-tooling/action-ros-ci@0.3.3
         with:
