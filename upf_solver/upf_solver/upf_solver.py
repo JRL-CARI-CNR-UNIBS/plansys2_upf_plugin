@@ -4,6 +4,7 @@ from rclpy.node import Node
 from unified_planning.engines.results import PlanGenerationResultStatus
 from unified_planning.io import PDDLReader, PDDLWriter
 from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
+from unified_planning.plot import plot_plan
 
 
 class UpfSolver(Node):
@@ -48,6 +49,8 @@ class UpfSolver(Node):
                     f.write(f'; Solution Found \n{writer.get_plan(result.plan)}')
                 else:
                     f.write(f'; No solution {result.status}')
+                    return
+        plot_plan(result.plan, figsize=(18, 4))
 
 
 def main(args=None):
