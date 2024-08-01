@@ -3,8 +3,8 @@ from rclpy.node import Node
 
 from unified_planning.engines.results import PlanGenerationResultStatus
 from unified_planning.io import PDDLReader, PDDLWriter
-from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
 from unified_planning.plot import plot_plan
+from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
 
 
 class UpfSolver(Node):
