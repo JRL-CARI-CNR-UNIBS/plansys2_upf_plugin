@@ -2,10 +2,10 @@ import rclpy
 from rclpy.node import Node
 
 from unified_planning.engines.results import PlanGenerationResultStatus
+from unified_planning.environment import get_environment
 from unified_planning.io import PDDLReader, PDDLWriter
 from unified_planning.plot import plot_plan
 from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
-
 
 class UpfSolver(Node):
 
@@ -27,6 +27,10 @@ class UpfSolver(Node):
         self.get_logger().info(f'Using domain: {self.domain_path}')
         self.get_logger().info(f'Using problem: {self.problem_path}')
         self.get_logger().info(f'Output plan: {self.output_plan_path}')
+
+    def check_solver(self):
+        if self.solver not in get_environment().factory.engines:
+            raise ValueError(f'Solver {self.solver} not found in available engines')
 
     def load_problem(self):
         reader = PDDLReader()
@@ -57,6 +61,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = UpfSolver()
     try:
+        node.check_solver()
         node.load_problem()
         node.solve()
     except Exception as e:
