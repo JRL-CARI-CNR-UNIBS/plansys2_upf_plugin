@@ -7,6 +7,7 @@ from unified_planning.io import PDDLReader, PDDLWriter
 from unified_planning.plot import plot_plan
 from unified_planning.shortcuts import OneshotPlanner  # OptimalityGuarantee
 
+
 class UpfSolver(Node):
 
     def __init__(self):
