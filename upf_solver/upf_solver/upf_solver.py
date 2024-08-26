@@ -22,14 +22,14 @@ class UpfSolver(Node):
         self.declare_parameter('show_available_engines', False)
         self.declare_parameter('plot_plan', False)
 
-
         self.solver = self.get_parameter('solver').get_parameter_value().string_value
         self.domain_path = self.get_parameter('domain_path').get_parameter_value().string_value
         self.problem_path = self.get_parameter('problem_path').get_parameter_value().string_value
         self.output_plan_path = (self.get_parameter('output_plan_path').get_parameter_value()
                                 ).string_value
         show_available_engines = (
-            self.get_parameter('show_available_engines').get_parameter_value().bool_value)
+            self.get_parameter('show_available_engines').get_parameter_value().bool_value
+            )
         self.plot_plan = self.get_parameter('plot_plan').get_parameter_value().bool_value
 
         self.get_logger().info(f'Using solver: {self.solver}')
@@ -60,7 +60,7 @@ class UpfSolver(Node):
 
             writer = PDDLWriter(self.parsed_problem)
             if not os.path.isdir(self.output_plan_path):
-                self.get_logger().info(f'Plan will be not save, output path empty or not valid')
+                self.get_logger().info('Plan will be not save, output path empty or not valid')
                 return
             with open(self.output_plan_path, 'w') as f:
                 if (result.status == PlanGenerationResultStatus.SOLVED_SATISFICING or
