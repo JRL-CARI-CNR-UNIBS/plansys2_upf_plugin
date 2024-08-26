@@ -27,8 +27,9 @@ class UpfSolver(Node):
         self.domain_path = self.get_parameter('domain_path').get_parameter_value().string_value
         self.problem_path = self.get_parameter('problem_path').get_parameter_value().string_value
         self.output_plan_path = (self.get_parameter('output_plan_path').get_parameter_value()
-                                 ).string_value
-        show_available_engines = self.get_parameter('show_available_engines').get_parameter_value().bool_value
+                                ).string_value
+        show_available_engines = (
+            self.get_parameter('show_available_engines').get_parameter_value().bool_value)
         self.plot_plan = self.get_parameter('plot_plan').get_parameter_value().bool_value
 
         self.get_logger().info(f'Using solver: {self.solver}')
