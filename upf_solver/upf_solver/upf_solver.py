@@ -1,3 +1,5 @@
+import os
+
 import rclpy
 from rclpy.node import Node
 
@@ -17,17 +19,25 @@ class UpfSolver(Node):
         self.declare_parameter('domain_path', '')
         self.declare_parameter('problem_path', '')
         self.declare_parameter('output_plan_path', '')
+        self.declare_parameter('show_available_engines', False)
+        self.declare_parameter('plot_plan', False)
+
 
         self.solver = self.get_parameter('solver').get_parameter_value().string_value
         self.domain_path = self.get_parameter('domain_path').get_parameter_value().string_value
         self.problem_path = self.get_parameter('problem_path').get_parameter_value().string_value
         self.output_plan_path = (self.get_parameter('output_plan_path').get_parameter_value()
                                  ).string_value
+        show_available_engines = self.get_parameter('show_available_engines').get_parameter_value().bool_value
+        self.plot_plan = self.get_parameter('plot_plan').get_parameter_value().bool_value
 
         self.get_logger().info(f'Using solver: {self.solver}')
         self.get_logger().info(f'Using domain: {self.domain_path}')
         self.get_logger().info(f'Using problem: {self.problem_path}')
         self.get_logger().info(f'Output plan: {self.output_plan_path}')
+        if show_available_engines:
+            self.get_logger().info(f'Available engine: {get_environment().factory.engines}')
+        get_environment().credits_stream = None
 
     def check_solver(self):
         if self.solver not in get_environment().factory.engines:
@@ -48,6 +58,9 @@ class UpfSolver(Node):
                 self.get_logger().info(f'{result.plan}')
 
             writer = PDDLWriter(self.parsed_problem)
+            if not os.path.isdir(self.output_plan_path):
+                self.get_logger().info(f'Plan will be not save, output path empty or not valid')
+                return
             with open(self.output_plan_path, 'w') as f:
                 if (result.status == PlanGenerationResultStatus.SOLVED_SATISFICING or
                         result.status == PlanGenerationResultStatus.SOLVED_OPTIMALLY):
@@ -55,7 +68,8 @@ class UpfSolver(Node):
                 else:
                     f.write(f'; No solution {result.status}')
                     return
-        plot_plan(result.plan, figsize=(18, 4))
+        if self.plot_plan:
+            plot_plan(result.plan, figsize=(18, 4))
 
 
 def main(args=None):
