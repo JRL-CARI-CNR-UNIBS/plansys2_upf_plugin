@@ -58,7 +58,7 @@ class UpfSolver(Node):
                 self.get_logger().info(f'{result.plan}')
 
             writer = PDDLWriter(self.parsed_problem)
-            if not os.path.isfile(self.output_plan_path):
+            if not self.output_plan_path:
                 self.get_logger().info('Plan will be not save, output path empty or not valid')
                 return
             with open(self.output_plan_path, 'w') as f:
