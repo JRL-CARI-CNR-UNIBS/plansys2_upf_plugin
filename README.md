@@ -74,4 +74,6 @@ planner:
     plan_solver_plugins: ["UPF"]
     UPF:
       plugin: "plansys2/UPFPlanSolver"
+      solver: "tamer" # tamer is by default (can be avoided the arg in that case), but there are others like "lpg"
+
 ```
