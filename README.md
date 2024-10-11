@@ -61,7 +61,7 @@ ros2 run upf_solver upf_solver --ros-args -p solver:='tamer' -p domain_path:='{$
 
 The plansys2_upf_plan_solver package contains the PlanSys2 plugin that integrates the UPF solver. This plugin allows PlanSys2 to use UPF as a planning solver.
 
-⚠️ When using the plugin for plansys first verify that the domain file and pddl problem used is formatted correctly (using ros2 run upf_solver ...). 
+⚠️ When using the plugin for plansys first verify that the domain file and pddl problem used is formatted correctly (using ros2 run upf_solver ...) with respect to what is expected from the unified planning library (and not just Plansys2). 
 
 To configure PlanSys2 to use the UPF plugin, set the following parameters in your plansys2_bringup or planner node configuration file:
 
@@ -80,3 +80,4 @@ planner:
       solver: "tamer" # tamer is by default (can be avoided the arg in that case), but there are others like "lpg"
 
 ```
+Note that there are different available solvers integrated in unified planning such as "tamer", and "lpg".
