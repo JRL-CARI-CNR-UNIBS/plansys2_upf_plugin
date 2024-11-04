@@ -1,4 +1,6 @@
 # Plansys2 UPF Plugin
+[![GitHub Action
+Status](https://github.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin/workflows/humble/badge.svg)](https://github.com/JRL-CARI-CNR-UNIBS/plansys2_upf_plugin)
 
 This repository contains the plugin for [PlanSys2](https://github.com/PlanSys2/ros2_planning_system) that uses the [unified-planning (UP)](https://github.com/aiplan4eu/unified-planning) as a solver. There are two ROS 2 packages:
 
