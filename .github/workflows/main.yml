@@ -48,4 +48,8 @@ jobs:
           import-token: ${{ secrets.GITHUB_TOKEN }}
           rosdep-check: true
           
+      - name: Upload coverage reports to Codecov with GitHub Action
+        uses: codecov/codecov-action@v4.2.0
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
