@@ -1,2 +1,1 @@
-pyparsing==3.0.0
 unified-planning[engines]
