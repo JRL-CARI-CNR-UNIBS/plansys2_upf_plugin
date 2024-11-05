@@ -26,7 +26,11 @@ jobs:
       - name: install python dep
         run: |
           python3 -m pip install -r upf_solver/requirements.txt
-
+      
+      - name: Install coverage tools
+        run: |
+          python3 -m pip install coverage pytest-cov
+      
       - name: build
         uses: ros-tooling/action-ros-ci@0.3.3
         with:
