@@ -41,7 +41,9 @@ public:
 
   std::optional<std::filesystem::path> create_folders(const std::string & node_namespace);
 
-  void configure(rclcpp_lifecycle::LifecycleNode::SharedPtr lc_node, const std::string & plugin_name);
+  void configure(
+    rclcpp_lifecycle::LifecycleNode::SharedPtr lc_node,
+    const std::string & plugin_name);
 
   std::optional<plansys2_msgs::msg::Plan> getPlan(
     const std::string & domain, const std::string & problem,
