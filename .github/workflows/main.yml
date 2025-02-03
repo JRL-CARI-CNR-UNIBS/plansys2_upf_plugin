@@ -28,13 +28,13 @@ jobs:
           python3 -m pip install -r upf_solver/requirements.txt
         
       - name: build
-        uses: ros-tooling/action-ros-ci@0.3.3
+        uses: ros-tooling/action-ros-ci@0.3.13
         with:
           package-name: upf_solver
           target-ros2-distro: jazzy
           
       - name: build and test
-        uses: ros-tooling/action-ros-ci@0.3.3
+        uses: ros-tooling/action-ros-ci@0.3.13
         with:
           package-name: plansys2_upf_plan_solver
           target-ros2-distro: jazzy
