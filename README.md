@@ -9,6 +9,8 @@ This repository contains the plugin for [PlanSys2](https://github.com/PlanSys2/r
 1. **upf_solver**: Contains a ROS 2 node that, given the domain and problem files in .pddl format and the path to save the plan, loads the domain/problem and saves the found solution.
 2. **plansys2_upf_plan_solver**: Contains the actual plugin for PlanSys2.
 
+The benefit is that all the solvers already integrated in the unified-planning library can be used.
+
 ## Installation
 
 To install the plugin, follow these steps:
