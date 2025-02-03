@@ -41,12 +41,11 @@ public:
 
   std::optional<std::filesystem::path> create_folders(const std::string & node_namespace);
 
-  void configure(rclcpp_lifecycle::LifecycleNode::SharedPtr, const std::string &);
+  void configure(rclcpp_lifecycle::LifecycleNode::SharedPtr &, const std::string &);
 
   std::optional<plansys2_msgs::msg::Plan> getPlan(
     const std::string & domain, const std::string & problem,
-    const std::string & node_namespace = "",
-    const rclcpp::Duration solver_timeout = 15s);
+    const std::string & node_namespace = "");
 
   bool isDomainValid(
     const std::string & domain,

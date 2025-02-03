@@ -67,7 +67,7 @@ UPFPlanSolver::create_folders(const std::string & node_namespace)
 }
 
 void UPFPlanSolver::configure(
-  rclcpp_lifecycle::LifecycleNode::SharedPtr lc_node,
+  rclcpp_lifecycle::LifecycleNode::SharedPtr & lc_node,
   const std::string & plugin_name)
 {
   lc_node_ = lc_node;
@@ -86,8 +86,7 @@ void UPFPlanSolver::configure(
 std::optional<plansys2_msgs::msg::Plan>
 UPFPlanSolver::getPlan(
   const std::string & domain, const std::string & problem,
-  const std::string & node_namespace,
-  const rclcpp::Duration solver_timeout)
+  const std::string & node_namespace)
 {
   if (system(nullptr) == 0) {
     return {};
@@ -116,8 +115,7 @@ UPFPlanSolver::getPlan(
   problem_out.close();
 
   RCLCPP_INFO(
-    lc_node_->get_logger(), "[%s-upf] called with timeout %d seconds",
-    lc_node_->get_name(), solver_timeout.seconds());
+    lc_node_->get_logger(), "[%s-upf] called!");
 
   const auto plan_file_path = output_dir / std::filesystem::path("plan");
   const auto solver = lc_node_->get_parameter(solver_parameter_name_).value_to_string();
